@@ -1,7 +1,7 @@
 let model;
 
 const loadLocalModel = async function() {
-    model = await tf.loadLayersModel('/model');
+    model = await tf.loadLayersModel('/getmodel/model.json');
     console.log('Successfully loaded local model');
 };
 
