@@ -1,0 +1,9 @@
+# Ignore .vscode
+.vscode
+
+# Ignore python envs:
+env/
+venv/
+
+# Ignore local dev files:
+local*

@@ -1,0 +1,123 @@
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="shortcut icon" type="image/png" href="cropperHead.png">
+    <title>CropperHead</title>
+
+    <!-- Cropper js -->
+    <link  href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.6/cropper.min.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.6/cropper.min.js"></script>
+
+    <!-- Load the latest version of TensorFlow.js -->
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/mobilenet"></script>
+
+    <!-- Botstrapper! -->
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <!-- jQuery library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <!-- Popper JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <!-- Latest compiled JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+
+    <!-- Our scripts: -->
+    <script src="js/index.js" type="module"></script>
+    <script src="js/predictor-js" type="module"></script>
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/cropper_mods.css">
+</head>
+
+
+
+<body>
+    <!-- Navigation bar: -->
+    <nav class="navbar navbar-expand-md bg-dark navbar-dark">
+        <a class="navbar-brand" href="#">
+            <img src="cropperHead.png" alt="Logo" style="width:40px;">
+            CropperHead
+        </a>
+    </nav>
+
+    <div class="container-md content">
+        <!-- Cropper.js container -->
+        <div class="row" id="result-container">
+            <div class="col-lg-8">
+                <div class="cropper-cont">
+                    <img height=500 src="https://i.imgur.com/JlUvsxa.jpg"
+                    id="result-image" style="display: block; max-width: 100%;">
+                </div>
+            </div>
+
+            <!-- The crop data: -->
+            <div class="col-lg-4">
+                <div class=uploader-cont>
+                    <p>Upload your image:
+                        <label class="btn btn-dark btn-file">
+                            Browse <input id="image-uploader" type="file" style="display: none;" accept=".jpg, .png">
+                        </label>
+                    </p>
+                </div>
+
+                <div class="crop-data-list">
+                    <div class="input-group crop-data">
+                        <span class="input-group-prepend">
+                            <label class="input-group-text crop-data-border" for="dataX">X</label>
+                        </span>
+                        <input type="text" class="form-control crop-data-border" id="dataX" placeholder="x">
+                        <span class="input-group-append">
+                            <span class="input-group-text crop-data-border">px</span>
+                        </span>
+                    </div>
+                    <div class="input-group crop-data">
+                        <span class="input-group-prepend">
+                            <label class="input-group-text crop-data-border" for="dataY">Y</label>
+                        </span>
+                        <input type="text" class="form-control crop-data-border" id="dataY" placeholder="y">
+                        <span class="input-group-append">
+                            <span class="input-group-text crop-data-border">px</span>
+                        </span>
+                    </div>
+                    <div class="input-group crop-data">
+                        <span class="input-group-prepend">
+                            <label class="input-group-text crop-data-border" for="dataWidth">Width</label>
+                        </span>
+                        <input type="text" class="form-control crop-data-border" id="dataWidth" placeholder="width">
+                        <span class="input-group-append">
+                            <span class="input-group-text crop-data-border">px</span>
+                        </span>
+                    </div>
+                    <div class="input-group crop-data">
+                        <span class="input-group-prepend">
+                            <label class="input-group-text crop-data-border" for="dataHeight">Height</label>
+                        </span>
+                        <input type="text" class="form-control crop-data-border" id="dataHeight" placeholder="height">
+                        <span class="input-group-append">
+                            <span class="input-group-text crop-data-border">px</span>
+                        </span>
+                    </div>
+                    <div class="input-group crop-data">
+                        <span class="input-group-prepend">
+                            <label class="input-group-text crop-data-border" for="dataRotate">Rotate</label>
+                        </span>
+                        <input type="text" class="form-control crop-data-border" id="dataRotate" placeholder="rotate">
+                        <span class="input-group-append">
+                            <span class="input-group-text crop-data-border">deg</span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row" id="crop-controls">
+            <!-- TODO! -->
+        </div>
+    </div>
+
+    <!-- The secret image with explicit height for tfjs -o-o- ! -->
+    <img id="myimage_sqrd" height="500" width="500" hidden="true">
+</body>
+
+</html>

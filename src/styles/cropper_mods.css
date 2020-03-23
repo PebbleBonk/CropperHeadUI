@@ -1,0 +1,17 @@
+/* Override some croppers styles: */
+.cropper-wrap-box {
+    background-color: #a7a7a7;
+}
+
+.cropper-view-box {
+    outline: 1px solid #ca4c4e;
+}
+
+.cropper-modal {
+    opacity: .65;
+}
+
+.cropper-crop-box .cropper-line, .cropper-crop-box .cropper-point {
+    background-color: #ca4c4e;
+
+}
