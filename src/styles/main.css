@@ -56,3 +56,14 @@ body {
 .crop-data-list .input-group-append .input-group-text {
     min-width: 3.5rem;
 }
+
+#info-plain p{
+    margin: 1rem;
+    color: #eee;
+}
+
+.fa-info-circle {
+    float: right;
+    font-size: larger;
+    color: #ccc;
+}

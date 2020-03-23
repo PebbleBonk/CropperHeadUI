@@ -22,6 +22,10 @@
     <!-- Latest compiled JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 
+    <!-- FontAwesome! -->
+    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js" integrity="sha384-tzzSw1/Vo+0N5UhStP3bvwWPq+uvzCMfrN1fEFe+xBmv1C/AtVX5K0uZtmcHitFZ" crossorigin="anonymous"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.13/js/fontawesome.js" integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY" crossorigin="anonymous"></script>
+
     <!-- Our scripts: -->
     <script src="js/index.js" type="module"></script>
     <!-- <script src="js/predictor.js" type="module"></script> -->
@@ -33,19 +37,20 @@
 
 <body>
     <!-- Navigation bar: -->
-    <nav class="navbar navbar-expand-md bg-dark navbar-dark">
+    <nav class="navbar navbar-expand-md bg-dark navbar-dark d-flex justify-content-between">
         <a class="navbar-brand" href="#">
             <img src="cropperHead.png" alt="Logo" style="width:40px;">
             CropperHead
         </a>
+        <a class="navbar-item" href="#" data-toggle="modal" data-target="#modal-info"><i class="fas fa-info-circle"></i></a>
     </nav>
 
     <div class="container-md content">
         <!-- Cropper.js container -->
         <div class="row" id="result-container">
             <div class="col-lg-8">
-                <div class="cropper-cont">
-                    <img height=500 src="https://live.staticflickr.com/5253/5467854595_5b845d1108_c_d.jpg"
+                <div class="cropper-cont" height=500>
+                    <img  src="https://live.staticflickr.com/5253/5467854595_5b845d1108_c_d.jpg"
                     id="result-image" style="display: block; max-width: 100%;">
                 </div>
             </div>
@@ -53,12 +58,16 @@
             <!-- The crop data: -->
             <div class="col-lg-4">
                 <div class=uploader-cont>
-                    <p>Upload your image:
+                    <p>Process your own image:
                         <label class="btn btn-dark btn-file">
                             Browse <input id="image-uploader" type="file" style="display: none;" accept=".jpg, .png">
                         </label>
                     </p>
+                    <p style="font-size: small; color: #777;">
+                        NOTE: All photos are processed locally. No data is saved.
+                    </p>
                 </div>
+
 
                 <div class="crop-data-list">
                     <div class="input-group crop-data">
@@ -113,6 +122,80 @@
 
         <div class="row" id="crop-controls">
             <!-- TODO! -->
+        </div>
+    </div>
+
+    <!-- The Modal Info -->
+    <div class="modal fade" id="modal-info">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                <h4 class="modal-title">CropperHead</h4>
+
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <p>A convolutional neural network trained to automagically crop photos.</p>
+                    <h5>Obtaining training data</h5>
+
+                    <p>
+                        The data was extracted from edited photos using the Information
+                        stored as XMP and EXIF. Information extracted included the crop area,
+                        as well as the rotation. It is theoretically possible to add other variables.
+                    </p>
+
+                    <h5>Developing the model</h5>
+                    <p>
+                        Underlying neural network is a simple convolutional neural network,
+                        developed with keras using TensorFlow 2.1. and python. Photos were resized to
+                        (250,250). No restrictions for aspect ratio were supplied.
+                    </p>
+                    <h5>Serving the model</h5>
+                    <p>
+                        Model is served with the new tensorflow js. All processing is done locally.
+                    </p>
+                    <h5>Predictions</h5>
+                    <p>
+                        The network spits out a tensor of four values, describing the crop area and
+                        rotation. In this UI, they are presented as:
+                    </p>
+                    <table style="width:100%">
+                        <tr>
+                            <th>Tag</th>
+                            <th>Meaning</th>
+                        </tr>
+                        <tr>
+                            <td style="font-family:courier;">X:</td>
+                            <td>Leftmost coordinate of the crop area</td>
+                        </tr>
+                        <tr>
+                            <td style="font-family:courier;">Y:</td>
+                            <td>Topmost coordinate of the crop area</td>
+                        </tr>
+                        <tr>
+                            <td style="font-family:courier;">Width:</td>
+                            <td>Width of the crop area</td>
+                        <tr>
+                            <td style="font-family:courier;">Height</td>
+                            <td>Height of the crop area</td>
+                        </tr>
+                        <tr>
+                            <td style="font-family:courier;">Rotation</td>
+                            <td>Rotatation applied as degrees</td>
+                        </tr>
+                      </table>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                <button type="button" class="btn btn-dark" data-dismiss="modal">Close</button>
+                </div>
+
+            </div>
         </div>
     </div>
 

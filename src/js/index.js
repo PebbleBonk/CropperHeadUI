@@ -56,7 +56,7 @@ function setupImageUploader() {
                 // const imgViewEl = document.getElementById('myimage_view');
                 imgDataEl.src = fr.result;
                 // imgViewEl.src = fr.result;
-                document.getElementById('result-image').src = fr.result;
+                //document.getElementById('result-image').src = fr.result;
                 cropper.replace(fr.result, false)
             }
             fr.readAsDataURL(files[0]);
