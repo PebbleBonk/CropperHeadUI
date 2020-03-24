@@ -2,7 +2,7 @@ import * as pred from './predictor.js'
 
 let model;  // Model
 let cropper;  // The awesome Cropper.js
-
+let previous_prediction = {};
 
 function getCropValues(w, h, crop) {
     // Convert from Top, Left, Bottom, Right crop coordinates to
@@ -31,15 +31,24 @@ async function predictImageCrop() {
 
     // Convert into crop values:
     const crop_data = getCropValues(imgData.width, imgData.height, crop_values);
+    // Stash values:
+    previous_prediction = crop_data;
+    // Apply crop:
+    applyPredictedCrop(crop_data);
+
+}
+
+
+function applyPredictedCrop(crop_data) {
     // Apply crop:
     cropper.setData(crop_data);
 
     // Set values to the input fields:
-    document.getElementById('dataX').value = Math.round(crop_data.x);
-    document.getElementById('dataY').value = Math.round(crop_data.y);
-    document.getElementById('dataWidth').value = Math.round(crop_data.width);
-    document.getElementById('dataHeight').value = Math.round(crop_data.height);
-    document.getElementById('dataRotate').value = Math.round(crop_data.rotate);
+    document.getElementById('dataX_pred').value = Math.round(crop_data.x);
+    document.getElementById('dataY_pred').value = Math.round(crop_data.y);
+    document.getElementById('dataWidth_pred').value = Math.round(crop_data.width);
+    document.getElementById('dataHeight_pred').value = Math.round(crop_data.height);
+    document.getElementById('dataRotate_pred').value = Math.round(crop_data.rotate);
 }
 
 
@@ -80,8 +89,23 @@ function setupCropper() {
     cropper = new Cropper(cropper_img, {
         zoomOnWheel: false,
         viewMode: 1,
-        background: false
+        background: false,
+        crop(event) {
+            // Set up data bindings:
+            document.getElementById('dataX_user').value = Math.round(event.detail.x);
+            document.getElementById('dataY_user').value = Math.round(event.detail.y);
+            document.getElementById('dataHeight_user').value = Math.round(event.detail.width);
+            document.getElementById('dataWidth_user').value  = Math.round(event.detail.height);
+            document.getElementById('dataRotate_user').value = Math.round(event.detail.rotate);
+        }
     });
+
+
+
+
+
+
+
 }
 
 document.addEventListener("DOMContentLoaded",async function(){
@@ -89,5 +113,10 @@ document.addEventListener("DOMContentLoaded",async function(){
     await pred.loadLocalModel();
     setupCropper();
     setupImageUploader();
+
+    // Bind the reset button:
+    document.getElementById("reset-pred-btn").addEventListener("click", function(){
+        applyPredictedCrop(previous_prediction);
+    });
 });
 

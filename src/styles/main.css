@@ -23,7 +23,7 @@ body {
 
 /* File uploader button */
 .btn-file {
-    margin-left: 0.1rem;
+    margin-left: 0.2rem;
     background-color: #4d85d8;
 }
 
@@ -34,13 +34,14 @@ body {
     margin: 1rem;
 }
 
+
 .crop-data-list > .input-group {
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.2rem;
     border-color: #4d4d4d;
 }
 
 .crop-data-list .input-group-text {
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.2rem;
     background-color: #fdaa41;
     color: #fff;
 }
@@ -49,14 +50,27 @@ body {
     border-color: #a2a2a2;
 }
 
+.crop-data-list .crop-header {
+    color: #fff;
+    background-color: #3f93ff;
+}
+
 .crop-data-list .input-group-prepend .input-group-text {
-    min-width: 5rem;
+    min-width: 4.5rem;
 }
 
 .crop-data-list .input-group-append .input-group-text {
     min-width: 3.5rem;
 }
 
+.crop-data-list .input-group-reset label {
+    background-color: #004093;
+    cursor: pointer;
+    min-width: 4.5rem;
+}
+
+
+/* Infos: */
 #info-plain p{
     margin: 1rem;
     color: #eee;
