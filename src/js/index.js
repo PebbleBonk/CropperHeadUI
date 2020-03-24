@@ -141,13 +141,13 @@ function bindOptionButtons() {
     const free_btn = document.getElementById("aspect-btn-free");
 
     one_btn.addEventListener("click", function(){
-        one_btn.classList.toggle("active");
-        free_btn.classList.toggle("active");
+        one_btn.classList.add("active");
+        free_btn.classList.remove("active");
         cropper.setAspectRatio(1);
     });
     document.getElementById("aspect-btn-free").addEventListener("click", function(){
-        one_btn.classList.toggle("active");
-        free_btn.classList.toggle("active");
+        one_btn.classList.remove("active");
+        free_btn.classList.add("active");
         cropper.setAspectRatio(null);
     });
 }
