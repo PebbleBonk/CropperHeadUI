@@ -41,8 +41,14 @@ async function predictImageCrop() {
 
 function applyPredictedCrop(crop_data) {
     // Apply crop:
-    cropper.setData(crop_data);
+    const containerData = cropper.getContainerData();
 
+    // Zoom to 50% from the center of the container.
+    cropper.zoomTo(0.001, {
+    x: containerData.width / 2,
+    y: containerData.height / 2,
+    });
+    cropper.setData(crop_data);
     // Set values to the input fields:
     document.getElementById('dataX_pred').value = Math.round(crop_data.x);
     document.getElementById('dataY_pred').value = Math.round(crop_data.y);
@@ -51,6 +57,23 @@ function applyPredictedCrop(crop_data) {
     document.getElementById('dataRotate_pred').value = Math.round(crop_data.rotate);
 }
 
+function setupUserCropBindings() {
+    document.getElementById("dataX_user").addEventListener("change", function(event) {
+        cropper.setData({x: parseInt(event.target.value)});
+    });
+    document.getElementById("dataY_user").addEventListener("change", function(event) {
+        cropper.setData({y: parseInt(event.target.value)});
+    });
+    document.getElementById("dataWidth_user").addEventListener("change", function(event) {
+        cropper.setData({width: parseInt(event.target.value)});
+    });
+    document.getElementById("dataHeight_user").addEventListener("change", function(event) {
+        cropper.setData({height: parseInt(event.target.value)});
+    });
+    document.getElementById("dataRotate_user").addEventListener("change", function(event) {
+        cropper.setData({rotate: parseInt(event.target.value)});
+    });
+}
 
 function setupImageUploader() {
     document.getElementById('image-uploader').onchange = function (evt) {
@@ -87,15 +110,15 @@ function setupCropper() {
     });
 
     cropper = new Cropper(cropper_img, {
-        zoomOnWheel: false,
-        viewMode: 1,
+        zoomable: false,
+        viewMode: 2,
         background: false,
         crop(event) {
             // Set up data bindings:
             document.getElementById('dataX_user').value = Math.round(event.detail.x);
             document.getElementById('dataY_user').value = Math.round(event.detail.y);
-            document.getElementById('dataHeight_user').value = Math.round(event.detail.width);
-            document.getElementById('dataWidth_user').value  = Math.round(event.detail.height);
+            document.getElementById('dataWidth_user').value = Math.round(event.detail.width);
+            document.getElementById('dataHeight_user').value  = Math.round(event.detail.height);
             document.getElementById('dataRotate_user').value = Math.round(event.detail.rotate);
         }
     });
@@ -113,10 +136,12 @@ document.addEventListener("DOMContentLoaded",async function(){
     await pred.loadLocalModel();
     setupCropper();
     setupImageUploader();
-
+    setupUserCropBindings();
     // Bind the reset button:
     document.getElementById("reset-pred-btn").addEventListener("click", function(){
         applyPredictedCrop(previous_prediction);
     });
+
+
 });
 
