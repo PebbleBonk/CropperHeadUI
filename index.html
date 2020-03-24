@@ -132,11 +132,45 @@
         </div>
 
 
-        <div class="row" id="crop-controls">
-            <!-- TODO! -->
-            <div class="btn-group btn-group-sm crop-ctrl">
-                <button type="button" id="aspect-btn-one" class="btn btn-primary">1:1</button>
-                <button type="button" id="aspect-btn-free" class="btn btn-primary active">Free</button>
+        <div class="row crop-controls-header border-bottom">
+            <span><a href="#crop-controls" data-toggle="collapse">Not impressed by the automatic crop?</a></span>
+        </div>
+        <div class="row crop-controls" >
+            <div id="crop-controls" class="collapse show">
+                <div >
+                    <!-- TODO! -->
+                    <div id="training-controls" class="border-bottom">
+                        <div class="btn-group btn-group-sm crop-ctrl">
+                            <button type="button" id="aspect-btn-one" class="btn btn-primary">1:1</button>
+                            <button type="button" id="aspect-btn-free" class="btn btn-primary active">Free</button>
+                        </div>
+
+                        <div class="btn-group btn-group-sm crop-ctrl float-right" style="margin-right: 1rem;">
+                            <button type="button"  class="btn btn-primary"><i class="fas fa-save"></i>&nbsp;Save</button>
+                        </div>
+                        <div class="btn-group btn-group-sm crop-ctrl float-right" >
+                            <button type="button"  class="btn btn-info"><i class="fas fa-cloud-upload-alt"></i>&nbsp;Send</button>
+                        </div>
+
+                    </div>
+
+
+                    <div id="training-info">
+                        <p>
+                            Well, we neither...
+                        </p>
+                        <p>
+                            If you want to, you can help us by providing some more training data.
+                            Here you have a some simple controls to help with the crop. When you are done,
+                            press "Send" and the crop information and the photo is sent.
+                        </p>
+                        <p>
+                            Please notice, that even though we do not collect any information of you, the photos
+                            sent will be used in training and may be inspected for performance. Therefore, please
+                            take care selecting photos you submit as training data.
+                        </p>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
