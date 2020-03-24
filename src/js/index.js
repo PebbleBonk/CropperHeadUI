@@ -40,6 +40,8 @@ async function predictImageCrop() {
 
 
 function applyPredictedCrop(crop_data) {
+    // XXX: Reset the aspect ratio:
+    document.getElementById("aspect-btn-free").click();
     // Apply crop:
     const containerData = cropper.getContainerData();
 
@@ -56,6 +58,7 @@ function applyPredictedCrop(crop_data) {
     document.getElementById('dataHeight_pred').value = Math.round(crop_data.height);
     document.getElementById('dataRotate_pred').value = Math.round(crop_data.rotate);
 }
+
 
 function setupUserCropBindings() {
     document.getElementById("dataX_user").addEventListener("change", function(event) {
@@ -74,6 +77,7 @@ function setupUserCropBindings() {
         cropper.setData({rotate: parseInt(event.target.value)});
     });
 }
+
 
 function setupImageUploader() {
     document.getElementById('image-uploader').onchange = function (evt) {
@@ -131,12 +135,31 @@ function setupCropper() {
 
 }
 
+
+function bindOptionButtons() {
+    const one_btn = document.getElementById("aspect-btn-one");
+    const free_btn = document.getElementById("aspect-btn-free");
+
+    one_btn.addEventListener("click", function(){
+        one_btn.classList.toggle("active");
+        free_btn.classList.toggle("active");
+        cropper.setAspectRatio(1);
+    });
+    document.getElementById("aspect-btn-free").addEventListener("click", function(){
+        one_btn.classList.toggle("active");
+        free_btn.classList.toggle("active");
+        cropper.setAspectRatio(null);
+    });
+}
+
+
 document.addEventListener("DOMContentLoaded",async function(){
     // Handler when the DOM is fully loaded
     await pred.loadLocalModel();
     setupCropper();
     setupImageUploader();
     setupUserCropBindings();
+    bindOptionButtons();
     // Bind the reset button:
     document.getElementById("reset-pred-btn").addEventListener("click", function(){
         applyPredictedCrop(previous_prediction);
