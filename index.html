@@ -13,6 +13,10 @@
 
     gtag('config', 'UA-161590318-1');
     </script>
+    <!-- For image resizing: -->
+    <script src="https://cdn.jsdelivr.net/npm/exif-js"></script>
+    <!-- Slightly modified from the one available in git: -->
+    <script type="text/javascript" src="js/ImageUploader.js"></script>
 
     <!-- Cropper js -->
     <link  href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.6/cropper.min.css" rel="stylesheet">
@@ -63,6 +67,7 @@
                     <img  src="https://live.staticflickr.com/5253/5467854595_5b845d1108_c_d.jpg"
                     id="result-image" style="display: block; max-width: 100%;">
                 </div>
+                <img src="#" id="resized-image" hidden="true">
             </div>
 
             <!-- The crop data: -->
@@ -149,7 +154,11 @@
                             <button type="button"  class="btn btn-primary"><i class="fas fa-save"></i>&nbsp;Save</button>
                         </div>
                         <div class="btn-group btn-group-sm crop-ctrl float-right" >
-                            <button type="button"  class="btn btn-info"><i class="fas fa-cloud-upload-alt"></i>&nbsp;Send</button>
+                            <button id="uploader-button" type="button"  class="btn btn-info" disabled="true">
+                                <i id="uploader-logo" class="fas fa-cloud-upload-alt"></i>
+                                <span id="uploader-spinner" class="spinner-border spinner-border-sm" role="status" hidden=True aria-hidden="true"></span>
+                                &nbsp;Send
+                            </button>
                         </div>
 
                     </div>
