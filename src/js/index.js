@@ -21,6 +21,20 @@ function getCropValues(w, h, crop) {
     return cropData;
 }
 
+function getNormalisedCropValues(w, h, crop) {
+    // Convert from x, y, width, height crop coordinates to
+    // Top Left Bottom Right
+    const cropData = {
+        top: crop[0]/w,
+        left: crop[1]/h,
+        bottom: (crop[2]-crop[0])/w,
+        right: (crop[3]-crop[1])/h,
+        rotate: crop[4]
+        // scaleX: 1,
+        // scaleY: 1,
+    }
+    return cropData;
+}
 
 async function predictImageCrop() {
     // Get the image data:
@@ -125,11 +139,25 @@ function setupCropper() {
             document.getElementById('dataWidth_user').value = Math.round(event.detail.width);
             document.getElementById('dataHeight_user').value  = Math.round(event.detail.height);
             document.getElementById('dataRotate_user').value = Math.round(event.detail.rotate);
+
+            let imData = cropper.getImageData();
+            let im_w = imData.width;
+            let im_h = imData.height;
+            let crop_data = getNormalisedCropValues(im_w, im_h, [
+                Math.round(event.detail.x),
+                Math.round(event.detail.y),
+                Math.round(event.detail.width),
+                Math.round(event.detail.height),
+                Math.round(event.detail.rotate)
+            ])
+            let aspect_ratio = Math.round(event.detail.width) / Math.round(event.detail.height);
+
             // UGLY, should be a multipart and json:
-            let urlArgs = '?x='+Math.round(event.detail.x)+'&y='+Math.round(event.detail.y);
-            urlArgs += '&width='+Math.round(event.detail.width)+'&height='+Math.round(event.detail.height);
-            urlArgs += '&rotate='+Math.round(event.detail.rotate);
+            let urlArgs = '?top='+crop_data.top+'&left='+crop_data.left;
+            urlArgs += '&bottom='+crop_data.bottom+'&right='+crop_data.right;
+            urlArgs += '&rotate='+crop_data.rotate+'&aspect_ratio='+aspect_ratio;
             urlArgs += '&filename='+document.getElementById('currentFilename').value
+
             document.getElementById('urlArgsHandle').value = urlArgs
         }
     });
