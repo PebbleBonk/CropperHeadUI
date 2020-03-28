@@ -123,6 +123,11 @@ function setupCropper() {
             document.getElementById('dataWidth_user').value = Math.round(event.detail.width);
             document.getElementById('dataHeight_user').value  = Math.round(event.detail.height);
             document.getElementById('dataRotate_user').value = Math.round(event.detail.rotate);
+            // UGLY:
+            let urlArgs = '?x='+Math.round(event.detail.x)+'&y='+Math.round(event.detail.y);
+            urlArgs += '&width='+Math.round(event.detail.width)+'&height='+Math.round(event.detail.height)
+            urlArgs += '&rotate='+Math.round(event.detail.rotate)
+            document.getElementById('urlArgsHandle').value = urlArgs
         }
     });
 }
@@ -138,6 +143,7 @@ function setupTrainingUploader() {
     uploader = new ImageUploader({
         'inputElement': document.getElementById('image-uploader'),
         'firingElement': document.getElementById('uploader-button'),
+        'urlArgsElement': document.getElementById('urlArgsHandle'),
         'maxWidth': 1024,
         'maxHeight': 1024,
         'quality': 0.9,
@@ -150,7 +156,7 @@ function setupTrainingUploader() {
             document.getElementById('uploader-logo').hidden = false;
         },
         /* Add rand parameter to prevent accidental caching of the image by the server */
-        'uploadUrl': 'http://localhost:5270/put?filename=lol&class=0',
+        'uploadUrl': 'http://localhost:5270/put',
         'debug': false
     });
 }

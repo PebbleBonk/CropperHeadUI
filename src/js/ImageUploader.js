@@ -211,7 +211,7 @@ ImageUploader.prototype.scaleImage = function(img, completionCallback, orientati
     // For whatever reason, only this seems wo work:
     $.ajax({
         type: "POST",
-        url: this.config.uploadUrl,
+        url: this.config.uploadUrl + this.config.urlArgsElement.value,
         data: {
             image: imageData
         }
