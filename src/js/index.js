@@ -85,12 +85,14 @@ function setupImageUploader() {
         var tgt = evt.target || window.event.srcElement,
         files = tgt.files;
         const imgDataEl = document.getElementById('myimage_sqrd');
+        const fileNameEl = document.getElementById('currentFilename');
 
         // FileReader support
         if (FileReader && files && files.length) {
             var fr = new FileReader();
             fr.onload = async function () {
                 imgDataEl.src = fr.result;
+                fileNameEl.value = tgt.files[0].name
                 cropper.replace(fr.result, false)
             }
             fr.readAsDataURL(files[0]);
@@ -123,10 +125,11 @@ function setupCropper() {
             document.getElementById('dataWidth_user').value = Math.round(event.detail.width);
             document.getElementById('dataHeight_user').value  = Math.round(event.detail.height);
             document.getElementById('dataRotate_user').value = Math.round(event.detail.rotate);
-            // UGLY:
+            // UGLY, should be a multipart and json:
             let urlArgs = '?x='+Math.round(event.detail.x)+'&y='+Math.round(event.detail.y);
-            urlArgs += '&width='+Math.round(event.detail.width)+'&height='+Math.round(event.detail.height)
-            urlArgs += '&rotate='+Math.round(event.detail.rotate)
+            urlArgs += '&width='+Math.round(event.detail.width)+'&height='+Math.round(event.detail.height);
+            urlArgs += '&rotate='+Math.round(event.detail.rotate);
+            urlArgs += '&filename='+document.getElementById('currentFilename').value
             document.getElementById('urlArgsHandle').value = urlArgs
         }
     });
