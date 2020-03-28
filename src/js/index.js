@@ -2,6 +2,7 @@ import * as pred from './predictor.js'
 
 let model;  // Model
 let cropper;  // The awesome Cropper.js
+let uploader; // The equally awsome HTML5-ImageUploader
 let previous_prediction = {};
 
 function getCropValues(w, h, crop) {
@@ -83,19 +84,17 @@ function setupImageUploader() {
     document.getElementById('image-uploader').onchange = function (evt) {
         var tgt = evt.target || window.event.srcElement,
         files = tgt.files;
+        const imgDataEl = document.getElementById('myimage_sqrd');
 
         // FileReader support
         if (FileReader && files && files.length) {
             var fr = new FileReader();
             fr.onload = async function () {
-                const imgDataEl = document.getElementById('myimage_sqrd');
-                // const imgViewEl = document.getElementById('myimage_view');
                 imgDataEl.src = fr.result;
-                // imgViewEl.src = fr.result;
-                //document.getElementById('result-image').src = fr.result;
                 cropper.replace(fr.result, false)
             }
             fr.readAsDataURL(files[0]);
+            document.getElementById('uploader-button').disabled = false;
         }
 
         // Not supported
@@ -126,13 +125,34 @@ function setupCropper() {
             document.getElementById('dataRotate_user').value = Math.round(event.detail.rotate);
         }
     });
+}
 
 
+function setupTrainingUploader() {
+    document.getElementById('uploader-button').addEventListener('click', function() {
+        // document.getElementById('uploader-button').disabled = true;
+        document.getElementById('uploader-spinner').hidden = false;
+        document.getElementById('uploader-logo').hidden = true;
+    })
 
-
-
-
-
+    uploader = new ImageUploader({
+        'inputElement': document.getElementById('image-uploader'),
+        'firingElement': document.getElementById('uploader-button'),
+        'maxWidth': 1024,
+        'maxHeight': 1024,
+        'quality': 0.9,
+        'timeout': 2000,
+        'onComplete': function()
+        {
+            /* Enable upload button */
+            document.getElementById('uploader-button').disabled = false;
+            document.getElementById('uploader-spinner').hidden = true;
+            document.getElementById('uploader-logo').hidden = false;
+        },
+        /* Add rand parameter to prevent accidental caching of the image by the server */
+        'uploadUrl': 'http://localhost:5270/put?filename=lol&class=0',
+        'debug': false
+    });
 }
 
 
@@ -160,6 +180,7 @@ document.addEventListener("DOMContentLoaded",async function(){
     setupImageUploader();
     setupUserCropBindings();
     bindOptionButtons();
+    setupTrainingUploader();
     // Bind the reset button:
     document.getElementById("reset-pred-btn").addEventListener("click", function(){
         applyPredictedCrop(previous_prediction);
