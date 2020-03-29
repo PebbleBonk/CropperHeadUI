@@ -60,8 +60,9 @@
     </nav>
 
     <div class="container-md content">
-        <!-- Cropper.js container -->
+        <!-- Image, load, reset and crop data: -->
         <div class="row" id="result-container">
+            <!-- Cropper.js container -->
             <div class="col-lg-8">
                 <div class="cropper-cont" height=500 style="max-height: 500px">
                     <img src="https://live.staticflickr.com/5253/5467854595_5b845d1108_c_d.jpg"
@@ -72,8 +73,9 @@
                 <img src="#" id="resized-image" hidden="true">
             </div>
 
-            <!-- The crop data: -->
+            <!-- Uplaod / reset controls & Crop data table: -->
             <div class="col-lg-4">
+                <!-- Upload / Reset Buttons -->
                 <div class="uploader-cont">
                     <div class="d-flex justify-content-between">
                         <div class="text-next-btn">Try with your own image:</div>
@@ -90,63 +92,74 @@
                     </div>
                 </div>
 
+                <!-- Info Divider -->
+                <div class="crop-controls-header border-bottom">
+                    <span><a href="#crop-pred-table" data-toggle="collapse">Crop and prediction info:</a></span>
+                </div>
+
                 <!-- Crop and Prediction information table -->
-                <div class="crop-data-list">
-                    <div class="input-group crop-data" >
-                        <span class="input-group-prepend" style="visibility: hidden;">
-                            <label class="input-group-text crop-data-border" >Pad</label>
-                        </span>
-                        <span class="form-control crop-data-border crop-header">Prediction</span>
-                        <span class="form-control crop-data-border crop-header">Current</span>
+                <div id="crop-pred-table" class="collapse show">
+                    <div class="crop-data-list">
+                        <div class="input-group crop-data" >
+                            <span class="input-group-prepend" style="visibility: hidden;">
+                                <label class="input-group-text crop-data-border" >Pad</label>
+                            </span>
+                            <span class="form-control crop-data-border crop-header">Prediction</span>
+                            <span class="form-control crop-data-border crop-header">Current</span>
 
-                    </div>
-                    <div class="input-group crop-data">
-                        <span class="input-group-prepend">
-                            <label class="input-group-text crop-data-border" for="dataX">X (px)</label>
-                        </span>
-                        <input type="text" class="form-control crop-data-border data_pred" id="dataX_pred" placeholder="x">
-                        <input type="text" class="form-control crop-data-border data_user" id="dataX_user" placeholder="x">
+                        </div>
+                        <div class="input-group crop-data">
+                            <span class="input-group-prepend">
+                                <label class="input-group-text crop-data-border" for="dataX">X (px)</label>
+                            </span>
+                            <input type="text" class="form-control crop-data-border data_pred" id="dataX_pred" placeholder="x">
+                            <input type="text" class="form-control crop-data-border data_user" id="dataX_user" placeholder="x">
 
-                    </div>
-                    <div class="input-group crop-data">
-                        <span class="input-group-prepend">
-                            <label class="input-group-text crop-data-border" for="dataY">Y (px)</label>
-                        </span>
-                        <input type="text" class="form-control crop-data-border data_pred" id="dataY_pred" placeholder="y">
-                        <input type="text" class="form-control crop-data-border data_user" id="dataY_user" placeholder="x">
+                        </div>
+                        <div class="input-group crop-data">
+                            <span class="input-group-prepend">
+                                <label class="input-group-text crop-data-border" for="dataY">Y (px)</label>
+                            </span>
+                            <input type="text" class="form-control crop-data-border data_pred" id="dataY_pred" placeholder="y">
+                            <input type="text" class="form-control crop-data-border data_user" id="dataY_user" placeholder="x">
 
-                    </div>
-                    <div class="input-group crop-data">
-                        <span class="input-group-prepend">
-                            <label class="input-group-text crop-data-border" for="dataWidth">W (px)</label>
-                        </span>
-                        <input type="text" class="form-control crop-data-border data_pred" id="dataWidth_pred" placeholder="width">
-                        <input type="text" class="form-control crop-data-border data_user" id="dataWidth_user" placeholder="x">
+                        </div>
+                        <div class="input-group crop-data">
+                            <span class="input-group-prepend">
+                                <label class="input-group-text crop-data-border" for="dataWidth">W (px)</label>
+                            </span>
+                            <input type="text" class="form-control crop-data-border data_pred" id="dataWidth_pred" placeholder="width">
+                            <input type="text" class="form-control crop-data-border data_user" id="dataWidth_user" placeholder="x">
 
-                    </div>
-                    <div class="input-group crop-data">
-                        <span class="input-group-prepend">
-                            <label class="input-group-text crop-data-border" for="dataHeight">H (px)</label>
-                        </span>
-                        <input type="text" class="form-control crop-data-border data_pred" id="dataHeight_pred" placeholder="height">
-                        <input type="text" class="form-control crop-data-border data_user" id="dataHeight_user" placeholder="x">
+                        </div>
+                        <div class="input-group crop-data">
+                            <span class="input-group-prepend">
+                                <label class="input-group-text crop-data-border" for="dataHeight">H (px)</label>
+                            </span>
+                            <input type="text" class="form-control crop-data-border data_pred" id="dataHeight_pred" placeholder="height">
+                            <input type="text" class="form-control crop-data-border data_user" id="dataHeight_user" placeholder="x">
 
-                    </div>
-                    <div class="input-group crop-data">
-                        <span class="input-group-prepend">
-                            <label class="input-group-text crop-data-border" for="dataRotate">R (°)</label>
-                        </span>
-                        <input type="text" class="form-control crop-data-border data_pred" id="dataRotate_pred" placeholder="rotate">
-                        <input type="text" class="form-control crop-data-border data_user" id="dataRotate_user" placeholder="x">
+                        </div>
+                        <div class="input-group crop-data">
+                            <span class="input-group-prepend">
+                                <label class="input-group-text crop-data-border" for="dataRotate">R (°)</label>
+                            </span>
+                            <input type="text" class="form-control crop-data-border data_pred" id="dataRotate_pred" placeholder="rotate">
+                            <input type="text" class="form-control crop-data-border data_user" id="dataRotate_user" placeholder="x">
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
 
 
+
+        <!-- Info Divider -->
         <div class="row crop-controls-header border-bottom">
-            <span><a href="#crop-controls" data-toggle="collapse">Not impressed by the automatic crop?</a></span>
+            <span><a href="#crop-controls" data-toggle="collapse">Help make the model better??</a></span>
         </div>
+
+        <!-- Training data upload infos -->
         <div class="row crop-controls" >
             <div id="crop-controls" class="collapse show">
                 <div >
