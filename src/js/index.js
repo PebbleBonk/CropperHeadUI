@@ -206,7 +206,7 @@ function setupTrainingUploader() {
         },
         /* Add rand parameter to prevent accidental caching of the image by the server */
         'uploadUrl': 'https://data-librarian.herokuapp.com/put',
-        'debug': false
+        'debug': true
     });
 }
 
