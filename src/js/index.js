@@ -250,6 +250,8 @@ document.addEventListener("DOMContentLoaded",async function(){
             content: cropper.getCroppedCanvas({maxWidth:300, maxHeight:300}),
         }).then((willSend) => {
             if (willSend) {
+                document.getElementById('uploader-spinner').hidden = false;
+                document.getElementById('uploader-logo').hidden = true;
                 document.getElementById("uploader-button-puppetmaster").click();
             } else {
 
