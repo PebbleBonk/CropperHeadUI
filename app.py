@@ -1,12 +1,13 @@
 from flask import Flask, jsonify, request, render_template, abort, redirect, send_from_directory
 import json
-
+from flask_cors import CORS
 source_folder = "./"
 
 app = Flask(
     __name__, static_url_path="", static_folder='./src/',
     template_folder=source_folder
 )
+CORS(app)
 
 @app.route('/getmodel/<string:model_file_name>')
 def get_model(model_file_name):
