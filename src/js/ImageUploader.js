@@ -208,19 +208,9 @@ ImageUploader.prototype.scaleImage = function(img, completionCallback, orientati
 	if (typeof this.config.onScale === 'function') {
         this.config.onScale(imageData);
     }
-    // For whatever reason, only this seems wo work:
-    $.ajax({
-        type: "POST",
-        url: this.config.uploadUrl + this.config.urlArgsElement.value,
-        data: {
-            image: imageData
-        }
-    }).done(function(o) {
-        completionCallback();
-        //console.log('saved');
-    });
 
-    // this.performUpload(imageData, completionCallback);
+    // this.performAjaxUpload(imageData, completionCallback);
+    this.performUpload(imageData, completionCallback);
     // this.performCustomUpload(imageData)
     //     .then((data) => {
     //         console.log(data);
@@ -232,11 +222,46 @@ ImageUploader.prototype.scaleImage = function(img, completionCallback, orientati
 
 };
 
+ImageUploader.prototype.performAjaxUpload = function(imageData, completionCallback) {
+    var uploadInProgress = true;
+    var This = this;
+    // For whatever reason, only this seems wo work:
+    var xhr = $.ajax({
+        type: "POST",
+        url: this.config.uploadUrl + this.config.urlArgsElement.value,
+        data: {
+            image: imageData
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+            console.log("UPLOAD FAILED:", xhr);
+            completionCallback();
+            uploadInProgress = false;
+        }
+    }).done(function(o) {
+        completionCallback();
+        uploadInProgress = false;
+        //console.log('saved');
+    });
+
+    if (this.config.timeout) {
+        setTimeout(function() {
+            if (uploadInProgress) {
+                xhr.abort();
+                This.uploadComplete({
+                    target: {
+                        status: 'Timed out'
+                    }
+                }, completionCallback);
+            }
+        }, this.config.timeout);
+    }
+}
+
 
 ImageUploader.prototype.performCustomUpload = async function(imageData, completionCallback) {
     // const url_args = formUrlParameters(labels);
     // const url = api_url.concat('/put', url_args);
-    const url = this.config.uploadUrl;
+    const url = this.config.uploadUrl + this.config.urlArgsElement.value;
     const response = await fetch(url, {
         method: 'POST', // *GET, POST, PUT, DELETE, etc.
         mode: 'cors', // no-cors, *cors, same-origin
@@ -253,6 +278,7 @@ ImageUploader.prototype.performCustomUpload = async function(imageData, completi
 
 ImageUploader.prototype.performUpload = function(imageData, completionCallback) {
     var xhr = new XMLHttpRequest();
+    const url = this.config.uploadUrl + this.config.urlArgsElement.value;
     var This = this;
     var uploadInProgress = true;
     var headers = this.config.requestHeaders;
@@ -266,8 +292,8 @@ ImageUploader.prototype.performUpload = function(imageData, completionCallback) 
     xhr.upload.addEventListener("progress", function(e) {
         This.progressUpdate(e.loaded, e.total);
     }, false);
-    xhr.open('POST', this.config.uploadUrl, true);
-    // xhr.setRequestHeader('content-type', 'application/x-www-form-urlencoded;charset=UTF-8');
+    xhr.open('POST', url, true);
+    xhr.setRequestHeader('content-type', 'application/x-www-form-urlencoded;charset=UTF-8');
     if(typeof headers === 'object' && headers !== null) {
         Object.keys(headers).forEach(function(key,index) {
             if(typeof headers[key] !== 'string') {
@@ -281,8 +307,10 @@ ImageUploader.prototype.performUpload = function(imageData, completionCallback) 
         });
     }
 
-    var body = imageData.split(',')[1];
-    xhr.send('image='+imageData);
+    imageData = imageData.split(',')[1]
+    var body = encodeURIComponent(imageData);
+    body = "image="+body;
+    xhr.send(body);
 
     if (this.config.timeout) {
         setTimeout(function() {
