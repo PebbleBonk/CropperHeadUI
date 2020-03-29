@@ -183,7 +183,7 @@ function setupTrainingUploader() {
         'maxWidth': 1024,
         'maxHeight': 1024,
         'quality': 0.9,
-        'timeout': 2000,
+        'timeout': 10000,
         'onComplete': function() {
             /* Enable upload button */
             document.getElementById('uploader-button').disabled = false;
