@@ -227,6 +227,12 @@ ImageUploader.prototype.performUpload = function(imageData, completionCallback) 
     xhr.upload.addEventListener("progress", function(e) {
         This.progressUpdate(e.loaded, e.total);
     }, false);
+    // xhr.addEventListener('error', function(e) {
+    //     console.log("XHR ERROR:", xhr.response);
+    //     if (typeof this.config.onFileComplete === 'function') {
+    //         this.config.onFileComplete(event, this.currentFile);
+    //     }
+    // });
     xhr.open('POST', url, true);
     xhr.setRequestHeader('content-type', 'application/x-www-form-urlencoded;charset=UTF-8');
     if(typeof headers === 'object' && headers !== null) {
