@@ -186,14 +186,18 @@
                         </p>
 
                         <ol>
-                            <li>Upload your image using the "Browse" button above</li>
+                            <li>Load your photo using the "Browse" button above</li>
                             <li>Adjust the crop to your liking</li>
-                            <li>Optionally you can set the aspect ratio to be square with the controls above</li>
-                            <li>When you are happy with the result, click "Send" button below.</li>
-                          </ol>
+                            <li>Once you are happy with the result, click "Send" button below.</li>
+                            <li>The photo and the crop information will be sent to the database and used to train the next model.</li>
+                        </ol>
                         <p>
-                            The photo and the crop information will be sent to the database and used to train the next model.
+                            Controls:
                         </p>
+                        <ul>
+                            <li>Optionally you can set the aspect ratio to be square with the controls above</li>
+                            <li>To set the rotation, edit the value in the Crop info table (Column "Current", Row "Angle")</li>
+                        </ul>
                         <p>
                             Please notice, that even though we do not collect any information of you, the photos
                             sent will be used in training and may be inspected for performance. Photos submitted will not
@@ -261,22 +265,22 @@
                         </tr>
                         <tr>
                             <td style="font-family:courier;">X:</td>
-                            <td>Leftmost coordinate of the crop area</td>
+                            <td>Leftmost coordinate of the crop area (pixels)</td>
                         </tr>
                         <tr>
                             <td style="font-family:courier;">Y:</td>
-                            <td>Topmost coordinate of the crop area</td>
+                            <td>Topmost coordinate of the crop area (pixels)</td>
                         </tr>
                         <tr>
                             <td style="font-family:courier;">Width:</td>
-                            <td>Width of the crop area</td>
+                            <td>Width of the crop area (pixels)</td>
                         <tr>
                             <td style="font-family:courier;">Height</td>
-                            <td>Height of the crop area</td>
+                            <td>Height of the crop area (pixels)</td>
                         </tr>
                         <tr>
                             <td style="font-family:courier;">Angle</td>
-                            <td>Rotatation applied as degrees</td>
+                            <td>Rotatation applied as degrees (°)</td>
                         </tr>
                       </table>
                 </div>
