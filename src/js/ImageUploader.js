@@ -209,72 +209,7 @@ ImageUploader.prototype.scaleImage = function(img, completionCallback, orientati
         this.config.onScale(imageData);
     }
 
-    // this.performAjaxUpload(imageData, completionCallback);
     this.performUpload(imageData, completionCallback);
-    // this.performCustomUpload(imageData)
-    //     .then((data) => {
-    //         console.log(data);
-    //         completionCallback();
-    //     })
-    //     .catch((error) => {
-    //         console.error('Error:', error);
-    //     });
-
-};
-
-ImageUploader.prototype.performAjaxUpload = function(imageData, completionCallback) {
-    var uploadInProgress = true;
-    var This = this;
-    // For whatever reason, only this seems wo work:
-    var xhr = $.ajax({
-        type: "POST",
-        url: this.config.uploadUrl + this.config.urlArgsElement.value,
-        data: {
-            image: imageData
-        },
-        error: function (xhr, ajaxOptions, thrownError) {
-            console.log("UPLOAD FAILED:", xhr);
-            completionCallback();
-            uploadInProgress = false;
-        }
-    }).done(function(o) {
-        completionCallback();
-        uploadInProgress = false;
-        //console.log('saved');
-    });
-
-    if (this.config.timeout) {
-        setTimeout(function() {
-            if (uploadInProgress) {
-                xhr.abort();
-                This.uploadComplete({
-                    target: {
-                        status: 'Timed out'
-                    }
-                }, completionCallback);
-            }
-        }, this.config.timeout);
-    }
-}
-
-
-ImageUploader.prototype.performCustomUpload = async function(imageData, completionCallback) {
-    // const url_args = formUrlParameters(labels);
-    // const url = api_url.concat('/put', url_args);
-    const url = this.config.uploadUrl + this.config.urlArgsElement.value;
-    const response = await fetch(url, {
-        method: 'POST', // *GET, POST, PUT, DELETE, etc.
-        mode: 'cors', // no-cors, *cors, same-origin
-        cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-        credentials: 'same-origin', // include, *same-origin, omit
-        headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
-        },
-        body: imageData
-    });
-    return await response.json(); // parses JSON response into native JavaScript objects
-
-}
 
 ImageUploader.prototype.performUpload = function(imageData, completionCallback) {
     var xhr = new XMLHttpRequest();
