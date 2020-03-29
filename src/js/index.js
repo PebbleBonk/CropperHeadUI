@@ -132,6 +132,7 @@ function setupCropper() {
         zoomable: false,
         viewMode: 2,
         background: false,
+        preview: ".crop-preview",
         crop(event) {
             // Set up data bindings:
             document.getElementById('dataX_user').value = Math.round(event.detail.x);
@@ -171,13 +172,13 @@ function setupCropper() {
 function setupTrainingUploader() {
     document.getElementById('uploader-button').addEventListener('click', function() {
         // document.getElementById('uploader-button').disabled = true;
-        document.getElementById('uploader-spinner').hidden = false;
-        document.getElementById('uploader-logo').hidden = true;
+        // document.getElementById('uploader-spinner').hidden = false;
+        // document.getElementById('uploader-logo').hidden = true;
     })
 
     uploader = new ImageUploader({
         'inputElement': document.getElementById('image-uploader'),
-        'firingElement': document.getElementById('uploader-button'),
+        'firingElement': document.getElementById('uploader-button-puppetmaster'),
         'urlArgsElement': document.getElementById('urlArgsHandle'),
         'maxWidth': 1024,
         'maxHeight': 1024,
@@ -239,7 +240,21 @@ document.addEventListener("DOMContentLoaded",async function(){
     document.getElementById("reset-pred-btn").addEventListener("click", function(){
         applyPredictedCrop(previous_prediction);
     });
+    document.getElementById("uploader-button").addEventListener("click", function(){
+        document.getElementById("result-image").hidden = false;
+        swal({
+            title: "Upload training data?",
+            text: "The photo and the crop information will be sent to the server and be used to train the next model.",
+            icon: "info",
+            buttons: true,
+            content: cropper.getCroppedCanvas({maxWidth:300, maxHeight:300}),
+        }).then((willSend) => {
+            if (willSend) {
+                document.getElementById("uploader-button-puppetmaster").click();
+            } else {
 
-
+            }
+        });
+    })
 });
 
