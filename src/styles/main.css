@@ -47,6 +47,7 @@ body {
 .text-next-btn {
     margin: auto;
     margin-left: 0;
+    color: white;
 }
 
 .btn-style0 {
@@ -109,12 +110,16 @@ body {
     color: #ccc;
 }
 
-#training-info {
-    margin: 1rem;
+.training-info-content {
+    margin-left: 1rem;
+    margin-right: 1rem;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
     font-size: smaller;
     color: #ccc;
-}
-
-#training-controls {
     border-color: #4d4d4d!Important;
 }
+
+/* #crop-controls {
+    border-color: #4d4d4d!Important;
+} */
