@@ -236,12 +236,15 @@ ImageUploader.prototype.performUpload = function(imageData, completionCallback) 
                 if (This.config.debug) {
                     console.log("Training image uploaded successfully");
                 }
+                if (typeof This.config.onSuccess === 'function') {
+                    This.config.onSuccess(event, This.currentFile, this.response);
+                }
             } else {
                 if (This.config.debug) {
                     console.log("Training image upload failed: " + this.response);
                 }
                 if (typeof This.config.onFailed === 'function') {
-                    This.config.onFailed(event, This.currentFile);
+                    This.config.onFailed(event, This.currentFile, this.response);
                 }
             }
         }
