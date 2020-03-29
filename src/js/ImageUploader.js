@@ -210,6 +210,7 @@ ImageUploader.prototype.scaleImage = function(img, completionCallback, orientati
     }
 
     this.performUpload(imageData, completionCallback);
+};
 
 ImageUploader.prototype.performUpload = function(imageData, completionCallback) {
     var xhr = new XMLHttpRequest();
