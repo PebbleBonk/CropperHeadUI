@@ -272,7 +272,6 @@ ImageUploader.prototype.performUpload = function(imageData, completionCallback) 
         setTimeout(function() {
             if (uploadInProgress) {
                 xhr.abort();
-                console.log("XHR ERROR:", xhr.response);
                 This.uploadComplete({
                     target: {
                         status: 'Timed out'
