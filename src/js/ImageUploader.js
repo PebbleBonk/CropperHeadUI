@@ -228,13 +228,24 @@ ImageUploader.prototype.performUpload = function(imageData, completionCallback) 
     xhr.upload.addEventListener("progress", function(e) {
         This.progressUpdate(e.loaded, e.total);
     }, false);
-    // xhr.addEventListener('error', function(e) {
-    //     console.log("XHR ERROR:", xhr.response);
-    //     if (typeof this.config.onFileComplete === 'function') {
-    //         this.config.onFileComplete(event, this.currentFile);
-    //     }
-    // });
+
     xhr.open('POST', url, true);
+    xhr.onreadystatechange = function receiveResponse() {
+        if (this.readyState == 4) {
+            if (this.status == 200) {
+                if (This.config.debug) {
+                    console.log("Training image uploaded successfully");
+                }
+            } else {
+                if (This.config.debug) {
+                    console.log("Training image upload failed: " + this.response);
+                }
+                if (typeof This.config.onFailed === 'function') {
+                    This.config.onFailed(event, This.currentFile);
+                }
+            }
+        }
+    };
     xhr.setRequestHeader('content-type', 'application/x-www-form-urlencoded;charset=UTF-8');
     if(typeof headers === 'object' && headers !== null) {
         Object.keys(headers).forEach(function(key,index) {
@@ -258,6 +269,7 @@ ImageUploader.prototype.performUpload = function(imageData, completionCallback) 
         setTimeout(function() {
             if (uploadInProgress) {
                 xhr.abort();
+                console.log("XHR ERROR:", xhr.response);
                 This.uploadComplete({
                     target: {
                         status: 'Timed out'
@@ -287,7 +299,9 @@ ImageUploader.prototype.uploadComplete = function(event, completionCallback) {
 };
 
 ImageUploader.prototype.progressUpdate = function(itemDone, itemTotal) {
-    console.log('Uploaded '+itemDone+' of '+itemTotal);
+    if (this.config.debug) {
+        console.log('Uploaded '+itemDone+' of '+itemTotal);
+    }
     this.progressObject.currentItemDone = itemDone;
     this.progressObject.currentItemTotal = itemTotal;
     if (this.config.onProgress) {
