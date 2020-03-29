@@ -153,9 +153,13 @@ function setupCropper() {
             let aspect_ratio = Math.round(event.detail.width) / Math.round(event.detail.height);
 
             // UGLY, should be a multipart and json:
-            let urlArgs = '?top='+crop_data.top+'&left='+crop_data.left;
-            urlArgs += '&bottom='+crop_data.bottom+'&right='+crop_data.right;
-            urlArgs += '&rotate='+crop_data.rotate+'&aspect_ratio='+aspect_ratio;
+            const precision = 6;
+            let urlArgs = '?top='+crop_data.top.toFixed(precision);
+            urlArgs +='&left='+crop_data.left.toFixed(precision);
+            urlArgs += '&bottom='+crop_data.bottom.toFixed(precision);
+            urlArgs +='&right='+crop_data.right.toFixed(precision);
+            urlArgs += '&rotate='+crop_data.rotate.toFixed(precision);
+            urlArgs +='&aspect_ratio='+aspect_ratio.toFixed(precision);
             urlArgs += '&filename='+document.getElementById('currentFilename').value
 
             document.getElementById('urlArgsHandle').value = urlArgs
