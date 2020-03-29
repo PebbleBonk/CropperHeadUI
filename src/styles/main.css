@@ -42,12 +42,17 @@ body {
     margin-bottom: 1rem;
 }
 
-/* File uploader button */
-.btn-file {
-    margin-left: 0.2rem;
-    background-color: #4d85d8;
+/* File uploader & crop reset text and buttons */
+.text-next-btn {
+    margin: auto;
+    margin-left: 0;
 }
 
+.btn-style0 {
+    margin-left: 0.2rem;
+    background-color: #4d85d8;
+    min-width: 6rem;
+}
 
 
 /* Displaying the cropping data: */
