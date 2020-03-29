@@ -263,8 +263,8 @@ ImageUploader.prototype.performUpload = function(imageData, completionCallback) 
         });
     }
 
-    imageData = imageData.split(',')[1]
-    var body = encodeURIComponent(imageData);
+    imageData64 = imageData.split(',')[1]
+    var body = encodeURIComponent(imageData64);
     body = "image="+body;
     xhr.send(body);
 
