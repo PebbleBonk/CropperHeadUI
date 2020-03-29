@@ -183,12 +183,17 @@ function setupTrainingUploader() {
         'maxHeight': 1024,
         'quality': 0.9,
         'timeout': 2000,
-        'onComplete': function()
-        {
+        'onComplete': function() {
             /* Enable upload button */
             document.getElementById('uploader-button').disabled = false;
             document.getElementById('uploader-spinner').hidden = true;
             document.getElementById('uploader-logo').hidden = false;
+        },
+        'onSuccess': function() {
+            alert("Successfully uploaded the training data. Thank you!");
+        },
+        'onFailed': function(e, f, r) {
+            alert(`Training data failed. Please try again later!`);
         },
         /* Add rand parameter to prevent accidental caching of the image by the server */
         'uploadUrl': 'http://localhost:5270/put',
