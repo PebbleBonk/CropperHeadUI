@@ -2,8 +2,15 @@ body {
     background-color: #4d4d4d;
 }
 
+.navbar-item {
+    margin: 0.5rem;
+}
 
-
+.navbar-item .fa-info-circle {
+    float: right;
+    font-size: larger;
+    color: #ccc;
+}
 /* Containers: */
 .content {
     margin-top: 1rem;
@@ -28,6 +35,10 @@ body {
 .crop-controls-header a {
     text-decoration: none;
     color: #a2a2a2;
+}
+
+.crop-controls-header a:hover, .crop-controls-header a:active {
+    color: #fdaa41;
 }
 
 .crop-controls {
@@ -104,11 +115,14 @@ body {
     color: #eee;
 }
 
-.fa-info-circle {
+.toggle-info-icon {
+    margin-right: 0.5rem;;
+}
+/* .fa-info-circle {
     float: right;
     font-size: larger;
     color: #ccc;
-}
+} */
 
 .training-info-content {
     margin-left: 1rem;
