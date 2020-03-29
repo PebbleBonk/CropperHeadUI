@@ -86,7 +86,7 @@
 
                     <div class="d-flex justify-content-between">
                         <span class="text-next-btn">Reset crop to prediction:</span>
-                        <button class="btn btn-primary btn-style0">
+                        <button class="btn btn-primary btn-style0" id="reset-pred-btn"></button>
                             <i class="fas fa-undo-alt"></i>&nbsp; Reset
                         </button>
                     </div>
@@ -110,7 +110,7 @@
                         </div>
                         <div class="input-group crop-data">
                             <span class="input-group-prepend">
-                                <label class="input-group-text crop-data-border" for="dataX">X (px)</label>
+                                <label class="input-group-text crop-data-border" for="dataX">X</label>
                             </span>
                             <input type="text" class="form-control crop-data-border data_pred" id="dataX_pred" placeholder="x">
                             <input type="text" class="form-control crop-data-border data_user" id="dataX_user" placeholder="x">
@@ -118,7 +118,7 @@
                         </div>
                         <div class="input-group crop-data">
                             <span class="input-group-prepend">
-                                <label class="input-group-text crop-data-border" for="dataY">Y (px)</label>
+                                <label class="input-group-text crop-data-border" for="dataY">Y</label>
                             </span>
                             <input type="text" class="form-control crop-data-border data_pred" id="dataY_pred" placeholder="y">
                             <input type="text" class="form-control crop-data-border data_user" id="dataY_user" placeholder="x">
@@ -126,7 +126,7 @@
                         </div>
                         <div class="input-group crop-data">
                             <span class="input-group-prepend">
-                                <label class="input-group-text crop-data-border" for="dataWidth">W (px)</label>
+                                <label class="input-group-text crop-data-border" for="dataWidth">Width</label>
                             </span>
                             <input type="text" class="form-control crop-data-border data_pred" id="dataWidth_pred" placeholder="width">
                             <input type="text" class="form-control crop-data-border data_user" id="dataWidth_user" placeholder="x">
@@ -134,7 +134,7 @@
                         </div>
                         <div class="input-group crop-data">
                             <span class="input-group-prepend">
-                                <label class="input-group-text crop-data-border" for="dataHeight">H (px)</label>
+                                <label class="input-group-text crop-data-border" for="dataHeight">Height</label>
                             </span>
                             <input type="text" class="form-control crop-data-border data_pred" id="dataHeight_pred" placeholder="height">
                             <input type="text" class="form-control crop-data-border data_user" id="dataHeight_user" placeholder="x">
@@ -142,7 +142,7 @@
                         </div>
                         <div class="input-group crop-data">
                             <span class="input-group-prepend">
-                                <label class="input-group-text crop-data-border" for="dataRotate">R (°)</label>
+                                <label class="input-group-text crop-data-border" for="dataRotate">Angle</label>
                             </span>
                             <input type="text" class="form-control crop-data-border data_pred" id="dataRotate_pred" placeholder="rotate">
                             <input type="text" class="form-control crop-data-border data_user" id="dataRotate_user" placeholder="x">
@@ -163,14 +163,13 @@
         <div class="row crop-controls" >
             <div id="crop-controls" class="collapse show">
                 <div >
-                    <!-- TODO! -->
                     <div id="crop-ctrl-btns" class="border-bottom training-info-content">
                         <span class=text-next-btn">Aspect ratio:</span>
                         <div class="btn-group btn-group-sm crop-ctrl">
                             <button type="button" id="aspect-btn-one" class="btn btn-primary">1:1</button>
                             <button type="button" id="aspect-btn-free" class="btn btn-primary active">Free</button>
                         </div>
-
+                        <!-- TODO -->
                         <!-- <div class="btn-group btn-group-sm crop-ctrl float-right" style="margin-right: 1rem;">
                             <button type="button"  class="btn btn-primary"><i class="fas fa-save"></i>&nbsp;Save</button>
                         </div> -->
@@ -273,7 +272,7 @@
                             <td>Height of the crop area</td>
                         </tr>
                         <tr>
-                            <td style="font-family:courier;">Rotation</td>
+                            <td style="font-family:courier;">Angle</td>
                             <td>Rotatation applied as degrees</td>
                         </tr>
                       </table>
