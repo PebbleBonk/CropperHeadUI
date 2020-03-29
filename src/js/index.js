@@ -2,7 +2,7 @@ import * as pred from './predictor.js'
 
 let model;  // Model
 let cropper;  // The awesome Cropper.js
-let uploader; // The equally awsome HTML5-ImageUploader
+let uploader; // The almost equally awsome, modded, HTML5-ImageUploader
 let previous_prediction = {};
 
 function getCropValues(w, h, crop) {
@@ -190,10 +190,18 @@ function setupTrainingUploader() {
             document.getElementById('uploader-logo').hidden = false;
         },
         'onSuccess': function() {
-            alert("Successfully uploaded the training data. Thank you!");
+            swal({
+                title: "Thank you!",
+                text: "The photo and the crop information were uploaded successfully!",
+                icon: "success"
+            });
         },
         'onFailed': function(e, f, r) {
-            alert(`Training data failed. Please try again later!`);
+            swal({
+                title: "Uploading failed!",
+                text: "There seems to be an issue with the server. Please try again later!",
+                icon: "error"
+            });
         },
         /* Add rand parameter to prevent accidental caching of the image by the server */
         'uploadUrl': 'http://localhost:5270/put',
