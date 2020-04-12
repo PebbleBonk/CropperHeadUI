@@ -2,11 +2,18 @@ body {
     background-color: #4d4d4d;
 }
 
+.navbar-item {
+    margin: 0.5rem;
+}
 
-
+.navbar-item .fa-info-circle {
+    float: right;
+    font-size: larger;
+    color: #ccc;
+}
 /* Containers: */
 .content {
-    margin-top: 2rem;
+    margin-top: 1rem;
 }
 
 .uploader-cont {
@@ -15,18 +22,50 @@ body {
 }
 
 .cropper-cont {
-    margin: 2rem;
+    margin: 1rem;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
-
-
-/* File uploader button */
-.btn-file {
-    margin-left: 0.2rem;
-    background-color: #4d85d8;
+.crop-controls-header {
+    margin-left: 1rem;
+    margin-top: 1rem;
+    margin-right: 1rem;
 }
 
+.crop-controls-header a {
+    text-decoration: none;
+    color: #a2a2a2;
+}
+
+.crop-controls-header a:hover, .crop-controls-header a:active {
+    color: #fdaa41;
+}
+
+.crop-controls {
+    margin-left: 1rem;
+    margin-right: 1rem;
+    margin-bottom: 2rem;
+    background-color: #343a40;
+}
+
+.crop-ctrl {
+    margin-left: 1rem;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+/* File uploader & crop reset text and buttons */
+.text-next-btn {
+    margin: auto;
+    margin-left: 0;
+    color: white;
+}
+
+.btn-style0 {
+    margin-left: 0.2rem;
+    background-color: #4d85d8;
+    min-width: 6rem;
+}
 
 
 /* Displaying the cropping data: */
@@ -56,7 +95,7 @@ body {
 }
 
 .crop-data-list .input-group-prepend .input-group-text {
-    min-width: 4.5rem;
+    min-width: 4.6rem;
 }
 
 .crop-data-list .input-group-append .input-group-text {
@@ -76,8 +115,25 @@ body {
     color: #eee;
 }
 
-.fa-info-circle {
+.toggle-info-icon {
+    margin-right: 0.5rem;;
+}
+/* .fa-info-circle {
     float: right;
     font-size: larger;
     color: #ccc;
+} */
+
+.training-info-content {
+    margin-left: 1rem;
+    margin-right: 1rem;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+    font-size: smaller;
+    color: #ccc;
+    border-color: #4d4d4d!Important;
 }
+
+/* #crop-controls {
+    border-color: #4d4d4d!Important;
+} */

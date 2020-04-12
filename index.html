@@ -13,6 +13,13 @@
 
     gtag('config', 'UA-161590318-1');
     </script>
+    <!-- For image resizing: -->
+    <script src="https://cdn.jsdelivr.net/npm/exif-js"></script>
+    <!-- Slightly modified from the one available in git: -->
+    <script type="text/javascript" src="js/ImageUploader.js"></script>
+
+    <!-- Sweet alerts :3 -->
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
     <!-- Cropper js -->
     <link  href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.6/cropper.min.css" rel="stylesheet">
@@ -56,84 +63,160 @@
     </nav>
 
     <div class="container-md content">
-        <!-- Cropper.js container -->
+        <!-- Image, load, reset and crop data: -->
         <div class="row" id="result-container">
+            <!-- Cropper.js container -->
             <div class="col-lg-8">
-                <div class="cropper-cont" height=500>
-                    <img  src="https://live.staticflickr.com/5253/5467854595_5b845d1108_c_d.jpg"
+                <div class="cropper-cont" height=500 style="max-height: 500px">
+                    <img src="https://live.staticflickr.com/5253/5467854595_5b845d1108_c_d.jpg"
                     id="result-image" style="display: block; max-width: 100%;">
                 </div>
+                <label class="hidden" id="urlArgsHandle" hidden="true"/>
+                <label class="hidden" id="currentFilename" hidden="true"/>
+                <img src="#" id="resized-image" hidden="true">
             </div>
 
-            <!-- The crop data: -->
+            <!-- Uplaod / reset controls & Crop data table: -->
             <div class="col-lg-4">
-                <div class=uploader-cont>
-                    <p>Process your own image:
-                        <label class="btn btn-dark btn-file">
-                            Browse <input id="image-uploader" type="file" style="display: none;" accept=".jpg, .png">
+                <!-- Upload / Reset Buttons -->
+                <div class="uploader-cont">
+                    <div class="d-flex justify-content-between">
+                        <span class="text-next-btn">Try with your own image:</span>
+                        <label class="btn btn-dark btn-style0">
+                            <i class="fas fa-file-image"></i>&nbsp; Browse<input id="image-uploader" type="file" style="display: none;" accept=".jpg, .png">
                         </label>
-                    </p>
-                    <p style="font-size: small; color: #777;">
-                        NOTE: All photos are processed locally. No data is saved.
-                    </p>
+                    </div>
+
+                    <div class="d-flex justify-content-between">
+                        <span class="text-next-btn">Reset crop to prediction:</span>
+                        <button class="btn btn-primary btn-style0" id="reset-pred-btn">
+                            <i class="fas fa-undo-alt"></i>&nbsp; Reset
+                        </button>
+                    </div>
                 </div>
 
+                <!-- Info Divider -->
+                <div class="crop-controls-header border-bottom">
+                    <span><a href="#crop-pred-table" data-toggle="collapse"><i class="fas fa-info-circle toggle-info-icon"></i> Crop and prediction info:</a></span>
+                </div>
 
-                <div class="crop-data-list">
-                    <div class="input-group crop-data">
-                        <span class="input-group-reset" id="reset-pred-btn">
-                            <label class="input-group-text crop-data-border" >&zwnj; <i class="fas fa-undo-alt"></i></label>
-                        </span>
-                        <span class="form-control crop-data-border crop-header">Prediction</span>
-                        <span class="form-control crop-data-border crop-header">Current</span>
+                <!-- Crop and Prediction information table -->
+                <div id="crop-pred-table" class="collapse">
+                    <div class="crop-data-list">
+                        <div class="input-group crop-data" >
+                            <span class="input-group-prepend" style="visibility: hidden;">
+                                <label class="input-group-text crop-data-border" >Pad</label>
+                            </span>
+                            <span class="form-control crop-data-border crop-header">Prediction</span>
+                            <span class="form-control crop-data-border crop-header">Current</span>
 
-                    </div>
-                    <div class="input-group crop-data">
-                        <span class="input-group-prepend">
-                            <label class="input-group-text crop-data-border" for="dataX">X (px)</label>
-                        </span>
-                        <input type="text" class="form-control crop-data-border data_pred" id="dataX_pred" placeholder="x">
-                        <input type="text" class="form-control crop-data-border data_user" id="dataX_user" placeholder="x">
+                        </div>
+                        <div class="input-group crop-data">
+                            <span class="input-group-prepend">
+                                <label class="input-group-text crop-data-border" for="dataX">X</label>
+                            </span>
+                            <input type="text" class="form-control crop-data-border data_pred" id="dataX_pred" placeholder="x">
+                            <input type="text" class="form-control crop-data-border data_user" id="dataX_user" placeholder="x">
 
-                    </div>
-                    <div class="input-group crop-data">
-                        <span class="input-group-prepend">
-                            <label class="input-group-text crop-data-border" for="dataY">Y (px)</label>
-                        </span>
-                        <input type="text" class="form-control crop-data-border data_pred" id="dataY_pred" placeholder="y">
-                        <input type="text" class="form-control crop-data-border data_user" id="dataY_user" placeholder="x">
+                        </div>
+                        <div class="input-group crop-data">
+                            <span class="input-group-prepend">
+                                <label class="input-group-text crop-data-border" for="dataY">Y</label>
+                            </span>
+                            <input type="text" class="form-control crop-data-border data_pred" id="dataY_pred" placeholder="y">
+                            <input type="text" class="form-control crop-data-border data_user" id="dataY_user" placeholder="x">
 
-                    </div>
-                    <div class="input-group crop-data">
-                        <span class="input-group-prepend">
-                            <label class="input-group-text crop-data-border" for="dataWidth">W (px)</label>
-                        </span>
-                        <input type="text" class="form-control crop-data-border data_pred" id="dataWidth_pred" placeholder="width">
-                        <input type="text" class="form-control crop-data-border data_user" id="dataWidth_user" placeholder="x">
+                        </div>
+                        <div class="input-group crop-data">
+                            <span class="input-group-prepend">
+                                <label class="input-group-text crop-data-border" for="dataWidth">Width</label>
+                            </span>
+                            <input type="text" class="form-control crop-data-border data_pred" id="dataWidth_pred" placeholder="width">
+                            <input type="text" class="form-control crop-data-border data_user" id="dataWidth_user" placeholder="x">
 
-                    </div>
-                    <div class="input-group crop-data">
-                        <span class="input-group-prepend">
-                            <label class="input-group-text crop-data-border" for="dataHeight">H (px)</label>
-                        </span>
-                        <input type="text" class="form-control crop-data-border data_pred" id="dataHeight_pred" placeholder="height">
-                        <input type="text" class="form-control crop-data-border data_user" id="dataHeight_user" placeholder="x">
+                        </div>
+                        <div class="input-group crop-data">
+                            <span class="input-group-prepend">
+                                <label class="input-group-text crop-data-border" for="dataHeight">Height</label>
+                            </span>
+                            <input type="text" class="form-control crop-data-border data_pred" id="dataHeight_pred" placeholder="height">
+                            <input type="text" class="form-control crop-data-border data_user" id="dataHeight_user" placeholder="x">
 
-                    </div>
-                    <div class="input-group crop-data">
-                        <span class="input-group-prepend">
-                            <label class="input-group-text crop-data-border" for="dataRotate">R (°)</label>
-                        </span>
-                        <input type="text" class="form-control crop-data-border data_pred" id="dataRotate_pred" placeholder="rotate">
-                        <input type="text" class="form-control crop-data-border data_user" id="dataRotate_user" placeholder="x">
+                        </div>
+                        <div class="input-group crop-data">
+                            <span class="input-group-prepend">
+                                <label class="input-group-text crop-data-border" for="dataRotate">Angle</label>
+                            </span>
+                            <input type="text" class="form-control crop-data-border data_pred" id="dataRotate_pred" placeholder="rotate">
+                            <input type="text" class="form-control crop-data-border data_user" id="dataRotate_user" placeholder="x">
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
 
 
-        <div class="row" id="crop-controls">
-            <!-- TODO! -->
+
+        <!-- Info Divider -->
+        <div class="row crop-controls-header border-bottom">
+            <span><a href="#crop-controls" data-toggle="collapse"><i class="fas fa-question-circle toggle-info-icon"></i>Help make the model better?</a></span>
+        </div>
+
+        <!-- Training data upload infos -->
+        <div class="row crop-controls" >
+            <div id="crop-controls" class="collapse">
+                <div >
+                    <div id="crop-ctrl-btns" class="border-bottom training-info-content">
+                        <span class=text-next-btn">Aspect ratio:</span>
+                        <div class="btn-group btn-group-sm crop-ctrl">
+                            <button type="button" id="aspect-btn-one" class="btn btn-primary">1:1</button>
+                            <button type="button" id="aspect-btn-free" class="btn btn-primary active">Free</button>
+                        </div>
+                        <!-- TODO -->
+                        <!-- <div class="btn-group btn-group-sm crop-ctrl float-right" style="margin-right: 1rem;">
+                            <button type="button"  class="btn btn-primary"><i class="fas fa-save"></i>&nbsp;Save</button>
+                        </div> -->
+                    </div>
+
+
+
+                    <div class="training-info-content border-bottom" id="training-info">
+                        <p>
+                            If you want to, you can help us by providing some more training data.
+                        </p>
+
+                        <ol>
+                            <li>Load your photo using the "Browse" button above</li>
+                            <li>Adjust the crop to your liking</li>
+                            <li>Once you are happy with the result, click "Send" button below.</li>
+                            <li>The photo and the crop information will be sent to the database and used to train the next model.</li>
+                        </ol>
+                        <p>
+                            Controls:
+                        </p>
+                        <ul>
+                            <li>Optionally you can set the aspect ratio to be square with the controls above</li>
+                            <li>To set the rotation, edit the value in the Crop info table (Column "Current", Row "Angle")</li>
+                        </ul>
+                        <p>
+                            Please notice, that even though we do not collect any information of you, the photos
+                            sent will be used in training and may be inspected for performance.
+                        </p>
+                    </div>
+
+                    <div id="train-ctrl-btns" class="training-info-content" >
+                        <span class=text-next-btn">Send photo and crop info:</span>
+                        <div class="btn-group btn-group-sm crop-ctrl" >
+                            <button id="uploader-button" type="button"  class="btn btn-info" disabled="true">
+                                <i id="uploader-logo" class="fas fa-cloud-upload-alt"></i>
+                                <span id="uploader-spinner" class="spinner-border spinner-border-sm" role="status" hidden=True aria-hidden="true"></span>
+                                &nbsp;Send
+                            </button>
+                            <button id="uploader-button-puppetmaster" hidden="true"></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -182,22 +265,22 @@
                         </tr>
                         <tr>
                             <td style="font-family:courier;">X:</td>
-                            <td>Leftmost coordinate of the crop area</td>
+                            <td>Leftmost coordinate of the crop area (pixels)</td>
                         </tr>
                         <tr>
                             <td style="font-family:courier;">Y:</td>
-                            <td>Topmost coordinate of the crop area</td>
+                            <td>Topmost coordinate of the crop area (pixels)</td>
                         </tr>
                         <tr>
                             <td style="font-family:courier;">Width:</td>
-                            <td>Width of the crop area</td>
+                            <td>Width of the crop area (pixels)</td>
                         <tr>
                             <td style="font-family:courier;">Height</td>
-                            <td>Height of the crop area</td>
+                            <td>Height of the crop area (pixels)</td>
                         </tr>
                         <tr>
-                            <td style="font-family:courier;">Rotation</td>
-                            <td>Rotatation applied as degrees</td>
+                            <td style="font-family:courier;">Angle</td>
+                            <td>Rotatation applied as degrees (°)</td>
                         </tr>
                       </table>
                 </div>
