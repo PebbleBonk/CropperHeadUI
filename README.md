@@ -10,7 +10,7 @@ Should you want to try running it yourself, locally just:
 
 1. Clone the repo:
     ```shell
-    git clone https://github.com/PebbleBonk/CropperHead-UI.git
+    git clone https://github.com/PebbleBonk/CropperHeadUI.git
     ```
 2. Install the requirements:
     ```shell
