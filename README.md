@@ -1,5 +1,5 @@
 # CropperHead UI
-A simple UI for a neural network model which has been trained to automatically crop images based on their content. See the live demo at cropper-head.herokuapp.com. (Might take a few seconds for the service to boot up at Heroku)
+A simple UI for a neural network model which has been trained to automatically crop images based on their content. See the live demo at [cropper-head.herokuapp.com](https://cropper-head.herokuapp.com). (Might take a few seconds for the service to boot up at Heroku)
 
 Allows users to send their own preferred crops to a server to be used in training of future, hopefully better, networks. 
 
